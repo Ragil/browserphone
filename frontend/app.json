@@ -1,0 +1,7 @@
+{
+  "name": "browserphone",
+  "description": "browser phone",
+  "env": {
+    "PRODUCTION": "true"
+  }
+}
