@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import CallPage from './call/call_page';
 import DialpadPage from './dialpad/dialpad_page';
 import env from 'env';
 import 'jquery.cookie';
@@ -16,7 +17,10 @@ export default class VoicePage extends React.Component {
 
     this.state = {
       connection : undefined,
-      device : undefined
+      device : undefined,
+
+      // toggle to refresh since connection/device are the same reference
+      refreshFlag : true
     };
 
     this.setupDevice();
@@ -25,20 +29,25 @@ export default class VoicePage extends React.Component {
 
   updateDevice(device) {
     this.setState(_.extend(this.state, {
-      device : device
+      device : device,
+      refreshFlag : !this.state.refreshFlag
     }));
   }
 
   updateConnection(connection) {
     this.setState(_.extend(this.state, {
-      connection : connection
+      connection : connection,
+      refreshFlag : !this.state.refreshFlag
     }));
   }
 
   onDeviceOrConnectionError(error) {
     this.setState(_.extend(this.state, {
-      error : error
+      error : error,
+      refreshFlag : !this.state.refreshFlag
     }));
+
+    this.initDevice();
   }
 
   setupDevice() {
@@ -46,7 +55,7 @@ export default class VoicePage extends React.Component {
       Twilio.Device[e](this.updateDevice.bind(this));
     }, this);
     _.each(['cancel', 'connect', 'disconnect', 'incoming'], (e) => {
-      Twilio.Device.incoming(this.updateConnection.bind(this));
+      Twilio.Device[e](this.updateConnection.bind(this));
     }, this);
     Twilio.Device.error(this.onDeviceOrConnectionError.bind(this));
   }
@@ -76,43 +85,41 @@ export default class VoicePage extends React.Component {
 
   render() {
     let content;
-    let spinnerConfig = {
-      lines: 11, // The number of lines to draw
-      length: 8, // The length of each line
-      width: 5, // The line thickness
-      radius: 13, // The radius of the inner circle
-      corners: 1, // Corner roundness (0..1)
-      rotate: 0, // The rotation offset
-      direction: 1, // 1: clockwise, -1: counterclockwise
-      color: '#000', // #rgb or #rrggbb or array of colors
-      speed: 1.1, // Rounds per second
-      trail: 100, // Afterglow percentage
-      shadow: false, // Whether to render a shadow
-      hwaccel: false, // Whether to use hardware acceleration
-      className: 'spinner', // The CSS class to assign to the spinner
-      zIndex: 2e9, // The z-index (defaults to 2000000000)
-      top: '50%', // Top position relative to parent
-      left: '50%' // Left position relative to parent
-    };
-    let spinner = <ReactSpinner config={spinnerConfig}/>;
+    let spinner = <ReactSpinner />;
 
-    if (!this.state.device) {
+    if (!this.state.device || this.state.device.status() === 'offline') {
+      let message = this.state.error ?
+          this.state.error.message + ' - Reinitializing Twilio Client' :
+          'Initializing Twilio Client';
+
       content = (
         <div className="voice-page-loading">
           <div className="voice-page-loading-spinner">
             {spinner}
           </div>
           <div className="voice-page-loading-message">
-            Initializing Twilio Client
+            {message}
           </div>
         </div>
       );
     } else {
-      content = (
-        <div className="voice-page-dialpad">
-          <DialpadPage {...this.state} />
-        </div>
-      );
+
+      if (this.state.connection && ['pending', 'connecting', 'open']
+          .indexOf(this.state.connection.status()) !== -1) {
+        content = (
+          <div className="voice-page-active-call">
+            <CallPage other={this.state.connection.parameters.From}
+                me={this.state.connection.parameters.To}
+                connection={this.state.connection} />
+          </div>
+        );
+      } else {
+        content = (
+          <div className="voice-page-dialpad">
+            <DialpadPage {...this.state} />
+          </div>
+        );
+      }
     }
 
     return (

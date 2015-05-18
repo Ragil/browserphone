@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var loaders = require('./webpack.loaders');
+
 
 /**
  * This is the Webpack configuration file for production.
@@ -23,9 +25,7 @@ module.exports = {
   ],
 
   module: {
-    loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader" }
-    ]
+    loaders: loaders
   },
 
   resolve: {

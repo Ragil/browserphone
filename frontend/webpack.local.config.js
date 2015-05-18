@@ -1,6 +1,7 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
+var loaders = require('./webpack.loaders');
 
 /**
  * This is the Webpack configuration file for local development. It contains
@@ -40,9 +41,7 @@ module.exports = {
 
   // Transform source code using Babel and React Hot Loader
   module: {
-    loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["react-hot", "babel-loader"]}
-    ]
+    loaders: loaders
   },
 
   // Automatically transform files with these extensions

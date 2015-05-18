@@ -17,6 +17,7 @@
   "devDependencies": {
     "coveralls": "^2.11.2",
     "css-loader": "^0.12.0",
+    "file-loader": "^0.8.1",
     "html-webpack-plugin": "^1.1.0",
     "istanbul": "^0.3.7",
     "istanbul-instrumenter-loader": "^0.1.2",
@@ -32,11 +33,13 @@
     "phantomjs": "^1.9.16",
     "react-hot-loader": "^1.2.3",
     "style-loader": "^0.12.2",
+    "url-loader": "^0.5.5",
     "webpack-dev-server": "^1.7.0"
   },
   "dependencies": {
     "babel-core": "^5.0.8",
     "babel-loader": "^5.0.0",
+    "bootstrap": "^3.3.4",
     "express": "^4.12.3",
     "jquery": "^2.1.4",
     "jquery.cookie": "1.4.1",
