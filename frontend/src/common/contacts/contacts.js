@@ -15,7 +15,7 @@ class Contact {
           return e.address;
         }).value();
 
-    this.photoLink = entry.link.length > 4 ? entry.link[1].href : '';
+    this.photoLink = entry.link.length >= 4 ? entry.link[1].href : '';
 
     this.phones = _.chain(entry['gd$phoneNumber'])
         .map((p) => {

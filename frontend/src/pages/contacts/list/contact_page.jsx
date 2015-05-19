@@ -30,11 +30,15 @@ export default class ContactPage extends React.Component {
       });
 
       photoEl = (
-        <img src={photoLink} />
+        <div className="contact-page-icon-container">
+          <img src={photoLink} />
+        </div>
       );
     } else  {
       photoEl = (
-        <span className="glyphicon glyphicon-user"></span>
+        <div className="contact-page-icon-container contact-page-no-image">
+          <span className="glyphicon glyphicon-user"></span>
+        </div>
       );
     }
 
@@ -42,9 +46,7 @@ export default class ContactPage extends React.Component {
       <div className={"contact-page" + bootstraputil.col(12)}>
 
         <div className={"contact-page-photo" + bootstraputil.col(2)}>
-          <div className="contact-page-icon-container">
-            {photoEl}
-          </div>
+          {photoEl}
         </div>
 
         <div className={"contact-page-user" + bootstraputil.col(6)}>
