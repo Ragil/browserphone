@@ -1,6 +1,7 @@
 import $ from 'jquery';
+import bootstraputil from 'src/common/bootstraputil';
 import CallPage from './call/call_page';
-import DialpadPage from './dialpad/dialpad_page';
+import ContactsPage from '../contacts/contacts_page';
 import env from 'env';
 import 'jquery.cookie';
 import gapi from '../../common/gapi';
@@ -108,22 +109,22 @@ export default class VoicePage extends React.Component {
           .indexOf(this.state.connection.status()) !== -1) {
         content = (
           <div className="voice-page-active-call">
-            <CallPage other={this.state.connection.parameters.From}
-                me={this.state.connection.parameters.To}
+            <CallPage from={this.state.connection.parameters.From}
+                to={this.state.connection.parameters.To}
                 connection={this.state.connection} />
           </div>
         );
       } else {
         content = (
-          <div className="voice-page-dialpad">
-            <DialpadPage {...this.state} />
+          <div className={"voice-page-contacts" + bootstraputil.col(6)}>
+            <ContactsPage {...this.state} />
           </div>
         );
       }
     }
 
     return (
-      <div className="voice-page">
+      <div className="voice-page row">
         {content}
       </div>
     );

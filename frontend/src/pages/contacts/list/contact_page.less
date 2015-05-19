@@ -1,0 +1,46 @@
+.contact-page {
+  @height: 60px;
+  @padding: 5px;
+
+  min-height: @height + @padding * 2;
+  line-height: @height;
+  padding-top: @padding;
+  padding-bottom: @padding;
+  margin-bottom: @padding;
+
+  box-shadow: 0 5px 10px grey;
+
+  .contact-page-user {
+    margin-top: 15px;
+    .contact-page-name, .contact-page-email {
+      line-height: normal;
+    }
+    .contact-page-email {
+      font-size: 12px;
+    }
+  }
+
+  .contact-page-phone {
+    line-height: normal;
+  }
+
+  .contact-page-icon-container {
+    width: @height;
+    height: @height;
+    line-height: @height;
+    text-align: center;
+
+    background-color: cornflowerblue;
+    border-radius: @height / 2;
+    overflow: hidden;
+
+    img {
+      width: @height;
+    }
+
+    .glyphicon {
+      font-size: 25px;
+      vertical-align: middle;
+    }
+  }
+}

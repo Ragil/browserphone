@@ -37,15 +37,24 @@ gapi.login = (immediate) => {
   gapi.client.setApiKey(apiKey);
   gapi.auth.authorize({
     client_id: clientId,
-    scope: 'https://www.googleapis.com/auth/userinfo.email',
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
     immediate: !!immediate
   }, (result) => {
-    authResult = result;
+    if (result.error) {
+      console.log(result);
+    } else {
+      authResult = result;
 
-    _.each(loggedInCallbacks, (cb) => {
-      cb(result);
-    });
-    loggedInCallbacks = [];
+      console.log(gapi.auth.getToken());
+      _.each(loggedInCallbacks, (cb) => {
+        cb(result);
+      });
+      loggedInCallbacks = [];
+
+    }
   });
 };
 

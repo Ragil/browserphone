@@ -49,6 +49,6 @@ export default class CallerPage extends React.Component {
   }
 }
 
-CallerPage.prototype.propTypes = {
+CallerPage.propTypes = {
   numberOrClient : React.PropTypes.string.isRequired
 };

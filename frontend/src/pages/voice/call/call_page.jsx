@@ -105,13 +105,13 @@ export default class CallPage extends React.Component {
     return (
       <div className="call-page">
         <div className="call-page-people row">
-          <CallerPage numberOrClient={this.props.me} />
+          <CallerPage numberOrClient={this.props.to} />
 
           <div className={'call-page-arrow' + bootstraputil.col(2)}>
             <span className="glyphicon glyphicon-arrow-right"></span>
           </div>
 
-          <CallerPage numberOrClient={this.props.other} />
+          <CallerPage numberOrClient={this.props.from} />
         </div>
         <div className="call-page-actions row">
           <span className={bootstraputil.col(2)}></span>
@@ -122,8 +122,8 @@ export default class CallPage extends React.Component {
   }
 }
 
-CallPage.prototype.propTypes = {
+CallPage.propTypes = {
   connection : React.PropTypes.object.isRequired,
-  me : React.PropTypes.string.isRequired,
-  other : React.PropTypes.string.isRequired
+  to : React.PropTypes.string.isRequired,
+  from : React.PropTypes.string.isRequired
 };
