@@ -69,24 +69,26 @@ export default class ContactPage extends React.Component {
 
     return (
       <div className={"contact-page" + bootstraputil.col(12)}>
+        <div className="row">
 
-        <div className={"contact-page-photo" + bootstraputil.col(2)}>
-          {photoEl}
-        </div>
-
-        <div className={"contact-page-user" + bootstraputil.col(6)}>
-          <div className="contact-page-name">
-            {this.props.contact.fullname}
+          <div className={"contact-page-photo" + bootstraputil.col(2)}>
+            {photoEl}
           </div>
-          <div className="contact-page-email">
-            {this.props.contact.primaryEmail}
+
+          <div className={"contact-page-user" + bootstraputil.col(5)}>
+            <div className="contact-page-name">
+              {this.props.contact.fullname}
+            </div>
+            <div className="contact-page-email">
+              {this.props.contact.primaryEmail}
+            </div>
           </div>
-        </div>
 
-        <div className={"contact-page-phones" + bootstraputil.col(4)}>
-          {phonesEl}
-        </div>
+          <div className={"contact-page-phones" + bootstraputil.col(5)}>
+            {phonesEl}
+          </div>
 
+        </div>
       </div>
     );
   }
