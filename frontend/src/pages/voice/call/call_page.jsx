@@ -105,13 +105,13 @@ export default class CallPage extends React.Component {
     return (
       <div className="call-page">
         <div className="call-page-people row">
-          <CallerPage numberOrClient={this.props.to} />
+          <CallerPage numberOrClient={this.props.from} />
 
           <div className={'call-page-arrow' + bootstraputil.col(2)}>
             <span className="glyphicon glyphicon-arrow-right"></span>
           </div>
 
-          <CallerPage numberOrClient={this.props.from} />
+          <CallerPage numberOrClient={this.props.to} />
         </div>
         <div className="call-page-actions row">
           <span className={bootstraputil.col(2)}></span>

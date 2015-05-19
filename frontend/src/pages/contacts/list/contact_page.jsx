@@ -1,8 +1,11 @@
 import $ from 'jquery';
 import gapi from 'src/common/gapi';
+import global from 'src/common/global';
 import React from 'react';
 import bootstraputil from 'src/common/bootstraputil';
 import "!style!css!less!./contact_page.less";
+
+let Twilio = window.Twilio;
 
 
 export default class ContactPage extends React.Component {
@@ -10,14 +13,36 @@ export default class ContactPage extends React.Component {
     super(props, context);
   }
 
+  callNumber(e) {
+    let number = e.target.attributes['data-number'].nodeValue;
+
+    global.call.From = '61401910355';
+    global.call.To = number;
+    Twilio.Device.connect({
+      From: global.call.From,
+      To: number,
+      Direction: 'outbound',
+      'google-token': gapi.auth.getToken().access_token
+    });
+  }
+
   render() {
+
     let phones = this.props.contact.phones;
     let phonesEl = [];
     if (phones) {
       phonesEl = _.map(phones, (number, index) => {
         return (
           <div className="contact-page-phone" key={index}>
-            {number}
+            <span className="contact-page-phone-number">
+              {number}
+            </span>
+            <button className="btn btn-success"
+                onClick={this.callNumber.bind(this)}
+                data-number={number} >
+              <span className="glyphicon glyphicon-phone"
+                  data-number={number}></span>
+            </button>
           </div>
         );
       });

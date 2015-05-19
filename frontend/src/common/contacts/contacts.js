@@ -23,7 +23,7 @@ class Contact {
             return p.$t;
           }
 
-          return p.uri.replace('tel:', '');
+          return p.uri.replace('tel:', '').replace(/-/g, '');
         }).filter((n) => {
           return n.length > 0;
         }).value();

@@ -48,7 +48,6 @@ gapi.login = (immediate) => {
     } else {
       authResult = result;
 
-      console.log(gapi.auth.getToken());
       _.each(loggedInCallbacks, (cb) => {
         cb(result);
       });

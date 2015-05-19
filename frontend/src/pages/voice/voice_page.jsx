@@ -3,6 +3,7 @@ import bootstraputil from 'src/common/bootstraputil';
 import CallPage from './call/call_page';
 import ContactsPage from '../contacts/contacts_page';
 import env from 'env';
+import global from 'src/common/global';
 import 'jquery.cookie';
 import gapi from '../../common/gapi';
 import React from 'react';
@@ -107,10 +108,15 @@ export default class VoicePage extends React.Component {
 
       if (this.state.connection && ['pending', 'connecting', 'open']
           .indexOf(this.state.connection.status()) !== -1) {
+
+        let from = this.state.connection.parameters.From;
+        from = from ? from : global.call.From;
+        let to = this.state.connection.parameters.To;
+        to = to ? to : global.call.To;
+
         content = (
           <div className="voice-page-active-call">
-            <CallPage from={this.state.connection.parameters.From}
-                to={this.state.connection.parameters.To}
+            <CallPage from={from} to={to}
                 connection={this.state.connection} />
           </div>
         );
