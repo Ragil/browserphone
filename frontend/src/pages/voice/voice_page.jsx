@@ -2,12 +2,15 @@ import $ from 'jquery';
 import bootstraputil from 'src/common/bootstraputil';
 import CallPage from './call/call_page';
 import ContactsPage from '../contacts/contacts_page';
+import DialpadPage from './dialpad/dialpad_page';
 import env from 'env';
 import global from 'src/common/global';
 import 'jquery.cookie';
 import gapi from '../../common/gapi';
 import React from 'react';
 import ReactSpinner from 'src/common/spin/spin';
+import Tab from 'src/common/tabs/tab';
+import TabPage from 'src/common/tabs/tab_page';
 import '!style!css!less!./voice_page.less';
 
 let Twilio = window.Twilio;
@@ -121,11 +124,20 @@ export default class VoicePage extends React.Component {
           </div>
         );
       } else {
-        content = (
+        let tabs = [new Tab({
+          title : 'Dial Pad',
+          component : <DialpadPage allowCalling={true} />
+        })];
+
+        content = [(
           <div className={"voice-page-contacts" + bootstraputil.col(6)}>
             <ContactsPage {...this.state} />
           </div>
-        );
+        ), (
+          <div className={"voice-page-tabs" + bootstraputil.col(6)}>
+            <TabPage tabs={tabs} />
+          </div>
+        )];
       }
     }
 

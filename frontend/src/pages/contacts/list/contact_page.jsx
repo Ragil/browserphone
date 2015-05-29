@@ -16,7 +16,7 @@ export default class ContactPage extends React.Component {
   callNumber(e) {
     let number = e.target.attributes['data-number'].nodeValue;
 
-    global.call.From = '61401910355';
+    global.call.From = env.phoneNumber;
     global.call.To = number;
     Twilio.Device.connect({
       From: global.call.From,
@@ -37,6 +37,7 @@ export default class ContactPage extends React.Component {
             <span className="contact-page-phone-number">
               {number}
             </span>
+
             <button className="btn btn-success"
                 onClick={this.callNumber.bind(this)}
                 data-number={number} >
