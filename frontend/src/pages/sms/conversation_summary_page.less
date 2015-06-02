@@ -1,0 +1,38 @@
+.conversation-summary-page {
+  @height: 60px;
+  @padding: 5px;
+
+  min-height: @height + @padding * 2;
+  line-height: @height;
+  padding-top: @padding;
+  padding-bottom: @padding;
+  margin-bottom: @padding;
+
+  box-shadow: 0 5px 10px grey;
+
+  .conversation-summary-page-content {
+    line-height: normal;
+  }
+
+  .conversation-summary-page-top {
+    margin-top: @padding * 2;
+
+    .conversation-summary-page-time {
+      font-size: 10px;
+      text-align: right;
+    }
+  }
+
+  .conversation-summary-page-bottom {
+    margin-top: @padding * 2;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: grey;
+
+    &.new {
+      color: green;
+    }
+  }
+}

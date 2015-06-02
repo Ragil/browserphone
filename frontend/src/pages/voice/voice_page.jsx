@@ -9,8 +9,6 @@ import 'jquery.cookie';
 import gapi from '../../common/gapi';
 import React from 'react';
 import ReactSpinner from 'src/common/spin/spin';
-import Tab from 'src/common/tabs/tab';
-import TabPage from 'src/common/tabs/tab_page';
 import '!style!css!less!./voice_page.less';
 
 let Twilio = window.Twilio;
@@ -21,8 +19,9 @@ export default class VoicePage extends React.Component {
     super(props, context);
 
     this.state = {
-      connection : undefined,
-      device : undefined,
+      device : this.getDeviceState() !== 'offline' ? Twilio.Device : undefined,
+      connection : this.getDeviceState() !== 'offline' ?
+          Twilio.Device.activeConnection() : undefined,
 
       // toggle to refresh since connection/device are the same reference
       refreshFlag : true
@@ -33,24 +32,24 @@ export default class VoicePage extends React.Component {
   }
 
   updateDevice(device) {
-    this.setState(_.extend(this.state, {
+    this.setState({
       device : device,
       refreshFlag : !this.state.refreshFlag
-    }));
+    });
   }
 
   updateConnection(connection) {
-    this.setState(_.extend(this.state, {
+    this.setState({
       connection : connection,
       refreshFlag : !this.state.refreshFlag
-    }));
+    });
   }
 
   onDeviceOrConnectionError(error) {
-    this.setState(_.extend(this.state, {
+    this.setState({
       error : error,
       refreshFlag : !this.state.refreshFlag
-    }));
+    });
 
     this.initDevice();
   }
@@ -65,27 +64,38 @@ export default class VoicePage extends React.Component {
     Twilio.Device.error(this.onDeviceOrConnectionError.bind(this));
   }
 
-  initDevice() {
-    let user = 'google-token';
-    let password = gapi.auth.getToken().access_token;
+  getDeviceState() {
+    try {
+      return Twilio.Device.status();
+    } catch (e) {
+      return 'offline'
+    }
+  }
 
-    $.ajax({
-      url : env.service.capability,
-      data : {
-        'client_name' : 'browser'
-      },
-      username : user,
-      password : password,
-      beforeSend: function(req) {
-        req.setRequestHeader('Authorization',
-            'Basic ' + btoa(user + ':' + password));
-      }
-    }).done((data, status, jqXHR) => {
-      Twilio.Device.setup(data.token, {
-        debug : true,
-        closeProtection : true
-      });
-    })
+  initDevice() {
+    if (this.getDeviceState() === 'offline') {
+
+      let user = 'google-token';
+      let password = gapi.auth.getToken().access_token;
+
+      $.ajax({
+        url : env.service.capability,
+        data : {
+          'client_name' : 'browser'
+        },
+        username : user,
+        password : password,
+        beforeSend: function(req) {
+          req.setRequestHeader('Authorization',
+              'Basic ' + btoa(user + ':' + password));
+        }
+      }).done((data, status, jqXHR) => {
+        Twilio.Device.setup(data.token, {
+          debug : true,
+          closeProtection : true
+        });
+      })
+    }
   }
 
   render() {
@@ -124,18 +134,13 @@ export default class VoicePage extends React.Component {
           </div>
         );
       } else {
-        let tabs = [new Tab({
-          title : 'Dial Pad',
-          component : <DialpadPage allowCalling={true} />
-        })];
-
         content = [(
-          <div className={"voice-page-contacts" + bootstraputil.col(6)}>
+          <div className={"voice-page-contacts" + bootstraputil.col(6)} key="1">
             <ContactsPage {...this.state} />
           </div>
         ), (
-          <div className={"voice-page-tabs" + bootstraputil.col(6)}>
-            <TabPage tabs={tabs} />
+          <div className={"voice-page-tabs" + bootstraputil.col(6)} key="2">
+            <DialpadPage allowCalling={true} />
           </div>
         )];
       }

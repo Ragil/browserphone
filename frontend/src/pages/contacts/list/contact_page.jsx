@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import ContactImagePage from '../img/contact_img_page';
+import env from 'env';
 import gapi from 'src/common/gapi';
 import global from 'src/common/global';
 import React from 'react';
@@ -49,31 +51,12 @@ export default class ContactPage extends React.Component {
       });
     }
 
-    let photoEl;
-    if (this.props.contact.photoLink) {
-      let photoLink = this.props.contact.photoLink + '?' + $.param({
-        access_token : gapi.auth.getToken().access_token
-      });
-
-      photoEl = (
-        <div className="contact-page-icon-container">
-          <img src={photoLink} />
-        </div>
-      );
-    } else  {
-      photoEl = (
-        <div className="contact-page-icon-container contact-page-no-image">
-          <span className="glyphicon glyphicon-user"></span>
-        </div>
-      );
-    }
-
     return (
       <div className={"contact-page" + bootstraputil.col(12)}>
         <div className="row">
 
           <div className={"contact-page-photo" + bootstraputil.col(2)}>
-            {photoEl}
+            <ContactImagePage contact={this.props.contact} />
           </div>
 
           <div className={"contact-page-user" + bootstraputil.col(5)}>

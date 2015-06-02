@@ -2,6 +2,8 @@ import React from "react";
 
 import VoicePage from '../voice/voice_page';
 import gapi from '../../common/gapi';
+import Router from "react-router";
+let { RouteHandler } = Router;
 
 export default class MainPage extends React.Component {
   constructor(props, context) {
@@ -24,7 +26,7 @@ export default class MainPage extends React.Component {
 
   render() {
     let loggedInContent = (
-      <VoicePage />
+      <RouteHandler {... this.props} />
     );
     let loggedOutContent = (
       <button className="btn btn-primary"

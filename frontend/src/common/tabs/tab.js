@@ -9,6 +9,10 @@ export default class Tab {
     if (!opts.component) {
       throw new Error('component is required');
     }
+    _.extend(this, {
+      selected : false,
+      href : '#'
+    });
     _.extend(this, opts);
   }
 }

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import _ from 'lodash';
 import gapi from '../gapi';
 
 
@@ -46,6 +47,16 @@ class Contacts {
     })
   }
 
+  findByNumber(number) {
+    return _.find(this.entries, (contact) => {
+      let found = _.find(contact.phones, (phone) => {
+        return phone === number;
+      });
+
+      return !!found;
+    });
+  }
+
   _fetch(opts) {
     if (!this.finished) {
       if (opts.callback) {
@@ -58,9 +69,7 @@ class Contacts {
         data: gapi.auth.getToken()
       }).done(this._onData.bind(this));
     } else if (opts.callback) {
-      window.setTimeout((() => {
-        opts.callback(this.entries);
-      }).bind(this), 1);
+      opts.callback(this.entries);
     }
   }
 

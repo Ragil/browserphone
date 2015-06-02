@@ -57,11 +57,12 @@ export default class DialpadPage extends React.Component {
   render() {
     let keys = _.map(this.keyLayout, (row) => {
 
-      let rowKeys = _.map(row, (entry) => {
+      let rowKeys = _.map(row, (entry, index) => {
         let key = entry[0];
 
         return (
-          <div className={"dialpad-page-key" + bootstraputil.col(4)}>
+          <div className={"dialpad-page-key" + bootstraputil.col(4)}
+              key={index}>
             <button className="btn btn-primary" data-key={key}
                 onClick={this.keyPressed.bind(this)}>
 
@@ -126,7 +127,7 @@ DialpadPage.prototype.keyLayout = [
 ];
 
 DialpadPage.propTypes = {
-  allowCalling : React.PropTypes.boolean,
+  allowCalling : React.PropTypes.bool,
   value : React.PropTypes.string,
   onChange : React.PropTypes.func
 };

@@ -44,6 +44,7 @@
     "jquery": "^2.1.4",
     "jquery.cookie": "1.4.1",
     "lodash": "^3.8.0",
+    "moment": "^2.10.3",
     "react": "^0.13.1",
     "react-router": "^0.13.1",
     "simplewebrtc": "^1.15.4",

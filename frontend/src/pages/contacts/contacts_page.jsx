@@ -12,10 +12,12 @@ export default class ContactsPage extends React.Component {
 
     this.allContacts = [];
     this.state = {
-      searchText : '',
-      loading : true
+      searchText : ''
     };
+  }
 
+  componentDidMount() {
+    this.setState({ loading : true });
     this.fetchContacts();
   }
 
