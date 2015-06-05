@@ -65,11 +65,11 @@ export default class SmsPage extends React.Component {
 
       // show summary with messages on the right
       content = [(
-        <div className={bootstraputil.col(5)} key="1">
+        <div className={bootstraputil.col([0, 0, 5, 5])} key="1">
           {conversationEls}
         </div>
       ), (
-        <div className={bootstraputil.col(7)} key="2">
+        <div className={bootstraputil.col([12, 12, 7, 7])} key="2">
           <ConversationPage conversationNumber={this.props.number} />
         </div>
       )];

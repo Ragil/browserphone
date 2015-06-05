@@ -5,8 +5,9 @@ import env from 'env';
 
 
 class Message {
-  constructor(message) {
+  constructor({message, isSelf}) {
     _.extend(this, message);
+    this.isSelf = isSelf;
   }
 }
 
@@ -15,8 +16,17 @@ class Conversation {
     this.size = conversation.size;
     this.otherNumber = conversation.other_number;
     this.messages = _.map(conversation.messages, (message) => {
-      return new Message(message);
-    });
+      return new Message({
+        message : message,
+        isSelf : message.from !== this.otherNumber
+      });
+    }, this);
+    this.latestMessage = _.last(this.messages);
+  }
+
+  addNewMessages(newMessages) {
+    this.size += newMessages.length;
+    this.messages = this.messages.concat(newMessages);
     this.latestMessage = _.last(this.messages);
   }
 }
@@ -81,8 +91,25 @@ class AllMessages {
   }
 
   onNewData(data, status, jqXHR) {
-    this.conversations = _.map(data.conversations, (convo) => {
+    let newConversations = _.map(data.conversations, (convo) => {
       return new Conversation(convo);
+    });
+
+    // merge conversations
+    _.each(newConversations, (newConvo) => {
+      let existingConvo = _.find(this.conversations, (convo) => {
+        return newConvo.otherNumber === convo.otherNumber;
+      });
+      if (existingConvo) {
+        existingConvo.addNewMessages(newConvo.messages);
+      } else {
+        this.conversations.push(newConvo);
+      }
+    }, this);
+
+    // sort by newest at the top
+    this.conversations = _.sortBy(this.conversations, (convo) => {
+      return -1 * convo.latestMessage.date_created
     });
 
     _.each(this.fetchCallbacks.concat(this.changeCallbacks), (cb) => {
@@ -92,6 +119,27 @@ class AllMessages {
 
     this.loading = false;
     this.loaded = true;
+  }
+
+  sendMessage({from, to, body}) {
+    let user = 'google-token';
+    let password = gapi.auth.getToken().access_token;
+
+    $.ajax({
+      url : env.service.sms,
+      method : 'POST',
+      data : {
+        from : from,
+        to : to,
+        body : body
+      },
+      username : user,
+      password : password,
+      beforeSend: function(req) {
+        req.setRequestHeader('Authorization',
+            'Basic ' + btoa(user + ':' + password));
+      }
+    }).done(this.onNewData.bind(this));
   }
 }
 

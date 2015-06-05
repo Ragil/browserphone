@@ -135,12 +135,12 @@ export default class VoicePage extends React.Component {
         );
       } else {
         content = [(
-          <div className={"voice-page-contacts" + bootstraputil.col(6)} key="1">
-            <ContactsPage {...this.state} />
+          <div className={"voice-page-tabs" + bootstraputil.col([12, 6, 4, 4])} key="2">
+            <DialpadPage allowCalling={true} />
           </div>
         ), (
-          <div className={"voice-page-tabs" + bootstraputil.col(6)} key="2">
-            <DialpadPage allowCalling={true} />
+          <div className={"voice-page-contacts" + bootstraputil.col([12, 6, 8, 8])} key="1">
+            <ContactsPage {...this.state} />
           </div>
         )];
       }

@@ -1,0 +1,22 @@
+.conversation-page {
+  @inputHeight : 54px;
+
+  .conversation-page-name {
+    margin-bottom: 10px;
+  }
+  .conversation-page-messages {
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 10px;
+  }
+
+  .conversation-page-input {
+    height: @inputHeight;
+    textarea {
+      resize: none;
+    }
+    .btn {
+      height: @inputHeight;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.message-page {
+  .message-page-text-container {
+    margin-bottom: 10px;
+
+    .self {
+      float: right;
+      text-align: right;
+
+      .message-page-text {
+        background-color: #5cb85c;
+      }
+    }
+
+    .message-page-text {
+      display: inline-block;
+      padding: 10px;
+      margin-bottom: 0px;
+      border-radius: 5px;
+      background-color: #5bc0de;
+      color: white;
+
+      &.undelivered {
+        background-color: #d9534f;
+      }
+
+      &.queued {
+        background-color: #f0ad4e;
+      }
+    }
+
+    .message-page-time {
+      display: block;
+      font-size: 10px;
+      color: grey;
+    }
+  }
+}

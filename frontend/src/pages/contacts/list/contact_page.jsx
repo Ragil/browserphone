@@ -53,7 +53,7 @@ export default class ContactPage extends React.Component {
 
     return (
       <div className={"contact-page" + bootstraputil.col(12)}>
-        <div className="row">
+        <div className="contact-page-container row">
 
           <div className={"contact-page-photo" + bootstraputil.col(2)}>
             <ContactImagePage contact={this.props.contact} />

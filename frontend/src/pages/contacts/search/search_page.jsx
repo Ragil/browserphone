@@ -1,4 +1,5 @@
 import React from 'react';
+import '!style!css!less!./search_page.less';
 
 
 export default class SearchPage extends React.Component {
@@ -20,9 +21,9 @@ export default class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="search-page row">
+      <div className="search-page">
         <form>
-          <div className="form-group">
+          <div className="input-group">
             <input type="search" className="form-control" ref="searchInput"
                 value={this.props.value}
                 onChange={this.onChange.bind(this)}
