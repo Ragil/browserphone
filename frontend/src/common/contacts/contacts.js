@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
+import env from 'env';
 import gapi from '../gapi';
 
 
@@ -38,11 +39,12 @@ class Contacts {
     this._callbacks = [];
     this.maxResult = 10000;
     this.finished = false;
+    this.loading = false;
   }
 
   fetch(callback) {
     this._fetch({
-      url : 'https://www.google.com/m8/feeds/contacts/default/full?alt=json&max_result=' + this.maxResult,
+      url : env.service.contacts,
       callback : callback
     })
   }
@@ -63,10 +65,22 @@ class Contacts {
         this._callbacks.push(opts.callback);
       }
 
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
+
+      let user = 'google-token';
+      let password = gapi.auth.getToken().access_token;
+
       $.ajax({
         url: opts.url,
-        dataType: 'jsonp',
-        data: gapi.auth.getToken()
+        username : user,
+        password : password,
+        beforeSend: function(req) {
+          req.setRequestHeader('Authorization',
+              'Basic ' + btoa(user + ':' + password));
+        }
       }).done(this._onData.bind(this));
     } else if (opts.callback) {
       opts.callback(this.entries);
@@ -74,6 +88,8 @@ class Contacts {
   }
 
   _onData(data) {
+    this.loading = false;
+    
     this.data.push(data);
     this.entries = this.entries.concat(_.map(data.feed.entry, (entry) => {
       return new Contact(entry);

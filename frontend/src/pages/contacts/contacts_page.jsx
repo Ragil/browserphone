@@ -12,6 +12,7 @@ export default class ContactsPage extends React.Component {
 
     this.allContacts = [];
     this.state = {
+      filteredEntries : [],
       searchText : ''
     };
   }

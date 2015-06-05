@@ -16,21 +16,25 @@ gapi.onload = (callback) => {
 };
 
 
-let authResult;
 let loggedInCallbacks = [];
 
 gapi.onLoggedIn = (callback) => {
-  if (!authResult) {
+  if (!gapi.isLoggedIn()) {
     loggedInCallbacks.push(callback);
   } else {
     window.setTimeout(() => {
-      callback(authResult);
+      callback(gapi.auth.getToken());
     }, 1);
   }
 };
+gapi.offLoggedIn = (callback) => {
+  loggedInCallbacks = _.filter(loggedInCallbacks, (cb) => {
+    return cb !== callback;
+  });
+};
 
 gapi.isLoggedIn = () => {
-  return !!authResult;
+  return !!(gapi.auth && gapi.auth.getToken() && gapi.auth.getToken().access_token);
 };
 
 gapi.login = (immediate) => {
@@ -46,19 +50,40 @@ gapi.login = (immediate) => {
     if (result.error) {
       console.log(result);
     } else {
-      authResult = result;
-
       _.each(loggedInCallbacks, (cb) => {
         cb(result);
       });
-      loggedInCallbacks = [];
-
     }
   });
 };
 
+let loggedOutCallbacks = [];
+let hasLoggedIn = false;
+gapi.onLoggedOut = (callback) => {
+  loggedOutCallbacks.push(callback);
+};
+gapi.offLoggedOut = (callback) => {
+  loggedOutCallbacks = _.filter(loggedOutCallbacks, (cb) => {
+    return cb !== callback;
+  });
+};
 
-let poll = () => {
+let pollToken = () => {
+  if (gapi.isLoggedIn()) {
+    hasLoggedIn = true;
+  } else if (hasLoggedIn) {
+    hasLoggedIn = false;
+    _.each(loggedOutCallbacks, (cb) => {
+      return cb();
+    });
+  }
+
+  window.setTimeout(pollToken, 1000);
+};
+pollToken();
+
+
+let hasInitPoll = () => {
   if (gapi.auth) {
     _.each(callbacks, (cb) => {
       cb();
@@ -67,9 +92,9 @@ let poll = () => {
 
     gapi.login(true);
   } else {
-    window.setTimeout(poll, 100);
+    window.setTimeout(hasInitPoll, 100);
   }
 };
-poll();
+hasInitPoll();
 
 export default gapi;

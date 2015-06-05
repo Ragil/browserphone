@@ -13,15 +13,29 @@ export default class MainPage extends React.Component {
       loggedIn : gapi.isLoggedIn()
     };
 
-    gapi.onLoggedIn((() => {
-      this.setState({
-        loggedIn : gapi.isLoggedIn()
-      });
-    }).bind(this));
+    this._login = this.login.bind(this);
+    this._onLoggedIn = this.onLoggedIn.bind(this);
+
+    gapi.onLoggedIn(this._onLoggedIn);
+    gapi.onLoggedOut(this._login);
+  }
+
+  onLoggedIn() {
+    this.setState({
+      loggedIn : gapi.isLoggedIn()
+    });
   }
 
   login() {
+    this.setState({
+      loggedIn : gapi.isLoggedIn()
+    });
     gapi.login();
+  }
+
+  componentWillUnmount() {
+    gapi.offLoggedOut(this._login);
+    gapi.offLoggedIn(this._onLoggedIn);
   }
 
   render() {

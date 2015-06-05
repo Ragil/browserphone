@@ -8,6 +8,7 @@ export default class Env {
     this.phoneNumber = '14159152352';
     this.service = {
       capability : opts.baseURL + '/api/twilio/capability',
+      contacts : opts.baseURL + '/api/google/contacts',
       sms : opts.baseURL + '/api/twilio/sms'
     }
   }
