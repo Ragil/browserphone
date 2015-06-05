@@ -23,10 +23,10 @@ export default class MessageBodyPage extends React.Component {
     );
 
     let msgWidth = this.props.message.isSelf ?
-        bootstraputil.col(12) : bootstraputil.col(11);
+        bootstraputil.col(12) : bootstraputil.col([10,11,11,11]);
 
     let content = [(
-      <div className={"message-page-image" + bootstraputil.col(1)} key="2">
+      <div className={"message-page-image" + bootstraputil.col([2,1,1,1])} key="2">
         <ContactImagePage contact={contact} width='40px' />
       </div>
     ), (
