@@ -24,7 +24,11 @@ export default class ContainerRouter extends RouterWithNavigation {
 
 class VoiceRouter extends RouterWithNavigation {
   render() {
-    let props = _.extend(this.props, this.props.query);
+    let decodedParams = {};
+    _.each(this.props.params, (value, key) => {
+      decodedParams[key] = decodeURIComponent(value);
+    });
+    let props = _.extend({}, this.props, this.props.query, decodedParams);
     return ( <MainTabPage {... props} /> );
   }
 }
@@ -33,6 +37,9 @@ VoiceRouter.defaultProps = { showVoice : true };
 class SmsRouter extends VoiceRouter { }
 SmsRouter.defaultProps = { showSMS : true };
 
+class ContactRouter extends VoiceRouter { }
+ContactRouter.defaultProps = { showContact : true };
+
 
 ContainerRouter.getRoutes = function() {
   return (
@@ -40,7 +47,8 @@ ContainerRouter.getRoutes = function() {
       <Route name="main" path="phone/" handler={MainPage} >
         <Route name="voice" path="voice" handler={VoiceRouter}></Route>
         <Route name="sms" path="sms" handler={SmsRouter}></Route>
-        <Route name="test" path="test" handler={TestRouter}></Route>
+        <Route name="conversation" path="sms/:number" handler={SmsRouter}></Route>
+        <Route name="contact" path="contact/:contactId" handler={ContactRouter}></Route>
 
         <DefaultRoute handler={VoiceRouter} />
       </Route>

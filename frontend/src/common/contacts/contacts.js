@@ -7,6 +7,7 @@ import gapi from '../gapi';
 class Contact {
   constructor(entry) {
     this.data = entry;
+    this.id = entry['id']['$t'].substring(entry['id']['$t'].lastIndexOf('/') + 1);
 
     this.fullname = entry.title ? entry.title.$t : '';
 
@@ -58,6 +59,12 @@ class Contacts {
       url : env.service.contacts,
       callback : callback
     })
+  }
+
+  findById(id) {
+    return _.find(this.entries, (contact) => {
+      return contact.id === id;
+    });
   }
 
   findByNumber(number) {

@@ -6,7 +6,8 @@ require('!style!css!less!./spin.less');
 var ReactSpinner = React.createClass({
   propTypes: {
     config: React.PropTypes.object,
-    stopped: React.PropTypes.bool
+    stopped: React.PropTypes.bool,
+    msg: React.PropTypes.string
   },
 
   componentDidMount: function() {
@@ -48,11 +49,16 @@ var ReactSpinner = React.createClass({
     let config = _.extend(defaultConfig, this.props.config);
 
     return (
-      <div ref="container" className="react-spinner" style={{
-        height : config.radius * 5,
-        width : config.radius * 5,
-        position : 'relative'
-      }} />
+      <div className="react-spinner">
+        <div ref="container" className="react-spinner-spin" style={{
+          height : config.radius * 5,
+          width : config.radius * 5,
+          position : 'relative'
+        }} />
+        <div className="react-spinner-message">
+          {this.props.msg}
+        </div>
+      </div>
     );
   }
 });

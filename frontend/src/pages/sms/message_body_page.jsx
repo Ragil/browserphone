@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import bootstraputil from 'src/common/bootstraputil';
 import contacts from 'src/common/contacts/contacts';
-import ContactImagePage from '../contacts/img/contact_img_page';
+import ContactImagePage from '../contact/img/contact_img_page';
 import React from 'react';
 import moment from 'moment';
 import '!style!css!less!./message_body_page.less';

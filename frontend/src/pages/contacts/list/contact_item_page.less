@@ -1,0 +1,41 @@
+.contact-item-page {
+  @height: 60px;
+  @padding: 5px;
+
+  .contact-item-page-container {
+    box-shadow: 0 5px 10px grey;
+
+    min-height: @height + @padding * 2;
+    line-height: @height;
+    padding-top: @padding;
+    padding-bottom: @padding;
+    margin-bottom: @padding;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .contact-item-page-user {
+    margin-top: 15px;
+    .contact-item-page-name, .contact-item-page-email {
+      line-height: normal;
+    }
+    .contact-item-page-email {
+      font-size: 12px;
+    }
+  }
+
+  .contact-item-page-phones {
+    margin-top: 15px;
+
+    .contact-item-page-phone {
+      font-size: 12px;
+      color: grey;
+      line-height: normal;
+      text-align: right;
+
+      .contact-item-page-phone-number {
+        vertical-align: middle;
+      }
+    }
+  }
+}

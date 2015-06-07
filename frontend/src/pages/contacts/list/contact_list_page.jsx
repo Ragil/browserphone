@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactPage from './contact_page.jsx';
+import ContactItemPage from './contact_item_page.jsx';
 
 
 export default class ContactListPage extends React.Component {
@@ -11,7 +11,7 @@ export default class ContactListPage extends React.Component {
     let contacts = _.chain(this.props.entries)
         .take(20)
         .map((contact, index) => {
-          return <ContactPage contact={contact} key={index} />;
+          return <ContactItemPage contact={contact} key={index} />;
         }).value();
 
     return (

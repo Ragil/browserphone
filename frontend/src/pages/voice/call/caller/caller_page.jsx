@@ -1,6 +1,6 @@
 import bootstraputil from 'src/common/bootstraputil';
 import contacts from 'src/common/contacts/contacts';
-import ContactImagePage from 'src/pages/contacts/img/contact_img_page';
+import ContactImagePage from 'src/pages/contact/img/contact_img_page';
 import React from 'react';
 import "!style!css!less!./caller_page.less";
 
