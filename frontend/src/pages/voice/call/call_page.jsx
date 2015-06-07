@@ -87,15 +87,12 @@ export default class CallPage extends React.Component {
 
       let soundIcon = this.props.connection.isMuted() ?
           'glyphicon-volume-off' : 'glyphicon-volume-up';
-      let sound = (
-        <button className="btn" onClick={this.toggleMute.bind(this)}>
-          <span className={"glyphicon " + soundIcon}></span>
-        </button>
-      );
 
       let leftActions = (
         <div className={'call-page-sound' + bootstraputil.col(8)} key="1">
-          {sound}
+          <button className="btn" onClick={this.toggleMute.bind(this)}>
+            <span className={"glyphicon " + soundIcon}></span>
+          </button>
         </div>
       );
 

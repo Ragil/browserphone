@@ -98,14 +98,9 @@ export default class ConversationPage extends React.Component {
     let contact = contacts.findByNumber(this.props.conversationNumber);
     let conversation = messages.findByConversation(this.props.conversationNumber);
 
-    let name = this.props.conversationNumber;
-    if (contact && contact.fullname) {
-      name = contact.fullname;
-      if (contact.phones.length > 1) {
-        name = contact.fullname + ' (' + this.props.conversationNumber + ')';
-      }
-    }
-
+    let name = contact ? contact.getIdentity(this.props.conversationNumber) :
+        this.props.conversationNumber;
+        
     let messagesEl = !conversation ? [] : _.chain(conversation.messages)
         .takeRight(this.state.showingNMessages)
         .map((message, index) => {

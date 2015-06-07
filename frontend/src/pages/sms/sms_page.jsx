@@ -85,7 +85,7 @@ export default class SmsPage extends React.Component {
 
     return (
       <div className="sms-page">
-        <div className="sms-page-summary row">
+        <div className="sms-page-summary">
           {content}
         </div>
       </div>

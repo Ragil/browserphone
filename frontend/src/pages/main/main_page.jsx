@@ -1,8 +1,8 @@
 import React from "react";
 
-import VoicePage from '../voice/voice_page';
 import gapi from '../../common/gapi';
 import Router from "react-router";
+import TwilioDevicePage from './twilio_device_page';
 let { RouteHandler } = Router;
 
 export default class MainPage extends React.Component {
@@ -40,7 +40,9 @@ export default class MainPage extends React.Component {
 
   render() {
     let loggedInContent = (
-      <RouteHandler {... this.props} />
+      <TwilioDevicePage>
+        <RouteHandler {... this.props} />
+      </TwilioDevicePage>
     );
     let loggedOutContent = (
       <button className="btn btn-primary"

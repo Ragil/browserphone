@@ -23,10 +23,14 @@ export default class ContactImgPage extends React.Component {
         </div>
       );
     } else {
+      let glyphStyle = {
+        'fontSize' : (parseInt(this.props.width.replace('px', '')) / 5 * 2) + 'px'
+      };
+
       photoEl = (
         <div className="contact-img-page-icon-container contact-img-page-no-image"
             style={style}>
-          <span className="glyphicon glyphicon-user"></span>
+          <span className="glyphicon glyphicon-user" style={glyphStyle}></span>
         </div>
       );
     }

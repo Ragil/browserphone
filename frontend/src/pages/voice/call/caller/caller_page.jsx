@@ -1,4 +1,6 @@
 import bootstraputil from 'src/common/bootstraputil';
+import contacts from 'src/common/contacts/contacts';
+import ContactImagePage from 'src/pages/contacts/img/contact_img_page';
 import React from 'react';
 import "!style!css!less!./caller_page.less";
 
@@ -19,7 +21,7 @@ export default class CallerPage extends React.Component {
           <div className="caller-page-icon">
             <span className="glyphicon glyphicon-phone"></span>
           </div>
-          <div className="caller-page-id">
+          <div className="caller-page-id client">
             {client}
           </div>
         </div>
@@ -28,13 +30,14 @@ export default class CallerPage extends React.Component {
     } else {
 
       let number = this.props.numberOrClient;
+      let contact = contacts.findByNumber(number);
+      let name = contact ? contact.getIdentity(number) : number;
+
       content = (
         <div className="caller-page-number jumbotron">
-          <div className="caller-page-icon">
-            <span className="glyphicon glyphicon-user"></span>
-          </div>
-          <div className="caller-page-id">
-            {number}
+          <ContactImagePage contact={contact} width="100px" />
+          <div className="caller-page-id contact">
+            {name}
           </div>
         </div>
       );

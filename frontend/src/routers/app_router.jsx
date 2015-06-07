@@ -34,13 +34,13 @@ class SmsRouter extends VoiceRouter { }
 SmsRouter.defaultProps = { showSMS : true };
 
 
-
 ContainerRouter.getRoutes = function() {
   return (
     <Route name="container" path="/" handler={ContainerRouter} >
       <Route name="main" path="phone/" handler={MainPage} >
         <Route name="voice" path="voice" handler={VoiceRouter}></Route>
         <Route name="sms" path="sms" handler={SmsRouter}></Route>
+        <Route name="test" path="test" handler={TestRouter}></Route>
 
         <DefaultRoute handler={VoiceRouter} />
       </Route>

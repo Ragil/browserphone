@@ -1,3 +1,6 @@
+var path = require('path');
+var loaders = require('./webpack.loaders');
+
 /**
  * This is the Karma configuration file. It contains information about this skeleton
  * that provides the test runner with instructions on how to run the tests and
@@ -31,7 +34,7 @@ module.exports = function(config) {
      * We want to run the tests using the PhantomJS headless browser.
      * This is especially useful for continuous integration.
      */
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS', 'Chrome'],
 
     /**
      * Use Mocha as the test framework, Sinon for mocking, and
@@ -68,9 +71,7 @@ module.exports = function(config) {
      */
     webpack: {
       module: {
-        loaders: [
-          { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader"}
-        ],
+        loaders: loaders,
         postLoaders: [{
           test: /\.jsx?$/,
           exclude: /(test|node_modules)\//,
@@ -78,6 +79,10 @@ module.exports = function(config) {
         }]
       },
       resolve: {
+        root : path.resolve(__dirname, '.'),
+        alias : {
+          'env' : 'src/common/env_local.js'
+        },
         extensions: ['', '.js', '.jsx']
       }
     },
@@ -90,11 +95,6 @@ module.exports = function(config) {
     },
 
     /**
-     * Once the mocha test suite returns, we want to exit from the test runner as well.
-     */
-    singleRun: true,
-
-    /**
      * List of plugins
      */
     plugins: [
@@ -102,7 +102,8 @@ module.exports = function(config) {
       'karma-webpack',
       'karma-coverage',
       'karma-sinon-chai',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-chrome-launcher'
     ],
   });
 }

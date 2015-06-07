@@ -30,6 +30,17 @@ class Contact {
           return n.length > 0;
         }).value();
   }
+
+  getIdentity(number) {
+    let name = number;
+    if (this.fullname) {
+      name = this.fullname;
+      if (this.phones.length > 1) {
+        name = this.fullname + ' (' + number + ')';
+      }
+    }
+    return name;
+  }
 }
 
 class Contacts {
@@ -89,7 +100,7 @@ class Contacts {
 
   _onData(data) {
     this.loading = false;
-    
+
     this.data.push(data);
     this.entries = this.entries.concat(_.map(data.feed.entry, (entry) => {
       return new Contact(entry);
