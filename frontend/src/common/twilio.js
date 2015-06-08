@@ -1,1 +1,1 @@
-export default window.Twilio;
+export default window.Twilio || {};

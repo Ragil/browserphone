@@ -1,5 +1,6 @@
 import env from 'env';
 import gapi from 'src/common/gapi';
+import global from 'src/common/global';
 import React from 'react';
 import Twilio from 'src/common/twilio';
 import '!style!css!less!./phone_page.less';
