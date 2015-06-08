@@ -84,7 +84,7 @@ pollToken();
 
 
 let hasInitPoll = () => {
-  if (gapi.auth) {
+  if (gapi.client) {
     _.each(callbacks, (cb) => {
       cb();
     });
