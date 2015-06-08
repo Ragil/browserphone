@@ -34,7 +34,7 @@ module.exports = function(config) {
      * We want to run the tests using the PhantomJS headless browser.
      * This is especially useful for continuous integration.
      */
-    browsers: ['PhantomJS', 'Chrome'],
+    browsers: ['Firefox', 'Chrome'],
 
     /**
      * Use Mocha as the test framework, Sinon for mocking, and
@@ -103,6 +103,7 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-sinon-chai',
       'karma-phantomjs-launcher',
+      'karma-firefox-launcher',
       'karma-chrome-launcher'
     ],
   });
