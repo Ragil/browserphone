@@ -45,7 +45,7 @@ export default class CallerPage extends React.Component {
     }
 
     return (
-      <div className={"caller-page" + bootstraputil.col(5)}>
+      <div className="caller-page">
         {content}
       </div>
     );

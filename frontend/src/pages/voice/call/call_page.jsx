@@ -54,9 +54,9 @@ export default class CallPage extends React.Component {
 
       let rightActions = (
         <div className={containerClass} key='2'>
-          {this.btn(containerClass + bootstraputil.col(1) + bootstraputil.coloffset(2),
+          {this.btn(containerClass + bootstraputil.col(2) + bootstraputil.coloffset(2),
               'btn btn-warning', 'Ignore', this.ignore.bind(this))}
-          {this.btn(containerClass + bootstraputil.col(1),
+          {this.btn(containerClass + bootstraputil.col(2),
               'btn btn-danger', 'Reject', this.reject.bind(this))}
         </div>
       );
@@ -80,7 +80,7 @@ export default class CallPage extends React.Component {
 
       let rightActions = (
         <div className={containerClass} key="2">
-          {this.btn(containerClass + bootstraputil.col(1) + bootstraputil.coloffset(1),
+          {this.btn(containerClass + bootstraputil.col(2) + bootstraputil.coloffset(2),
               "btn btn-danger", 'Hangup', this.hangup.bind(this))}
         </div>
       );
@@ -99,20 +99,21 @@ export default class CallPage extends React.Component {
       actions = [leftActions, rightActions];
     }
 
+    let other = this.props.to || this.props.from;
+
     return (
       <div className="call-page">
-        <div className="call-page-people row">
-          <CallerPage numberOrClient={this.props.from} />
-
-          <div className={'call-page-arrow' + bootstraputil.col(2)}>
-            <span className="glyphicon glyphicon-arrow-right"></span>
+        <div className="row">
+          <div className={"call-page-people" + bootstraputil.col(4) + bootstraputil.coloffset(4)}>
+            <CallerPage numberOrClient={other} />
           </div>
-
-          <CallerPage numberOrClient={this.props.to} />
         </div>
         <div className="call-page-actions row">
-          <span className={bootstraputil.col(2)}></span>
-          {actions}
+          <div className={bootstraputil.coloffset(4) + bootstraputil.col(4)}>
+            <div className="row">
+              {actions}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -121,6 +122,6 @@ export default class CallPage extends React.Component {
 
 CallPage.propTypes = {
   connection : React.PropTypes.object.isRequired,
-  to : React.PropTypes.string.isRequired,
+  to : React.PropTypes.string,
   from : React.PropTypes.string.isRequired
 };
