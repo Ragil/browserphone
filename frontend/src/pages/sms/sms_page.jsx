@@ -96,6 +96,7 @@ export default class SmsPage extends React.Component {
     messages.fetch({
       callback : this.onNewMessages.bind(this)
     });
+    messages.onChange(this.onNewMessages.bind(this));
     contacts.fetch(((entries) => {
       this.setState({
         loadingContacts : false

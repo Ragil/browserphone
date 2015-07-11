@@ -2,6 +2,7 @@ import $ from 'jquery';
 import _ from 'lodash';
 import gapi from 'src/common/gapi';
 import env from 'env';
+import moment from 'moment';
 
 
 class Message {
@@ -38,6 +39,7 @@ class AllMessages {
     this.fetchCallbacks = [];
     this.loaded = false;
     this.loading = false;
+    this.lastLoaded = 0;
   }
 
   onChange(callback) {
@@ -79,7 +81,7 @@ class AllMessages {
       url : env.service.sms,
       data : {
         number : env.phoneNumber,
-        since_epoch : 0
+        since_epoch : this.lastLoaded
       },
       username : user,
       password : password,
@@ -88,6 +90,8 @@ class AllMessages {
             'Basic ' + btoa(user + ':' + password));
       }
     }).done(this.onNewData.bind(this));
+
+    this.lastLoaded = moment().unix() * 1000;
   }
 
   onNewData(data, status, jqXHR) {
@@ -143,5 +147,18 @@ class AllMessages {
   }
 }
 
+let messages = new AllMessages();
 
-export default new AllMessages();
+let pollMessages = () => {
+  if (messages.loaded && !messages.loading &&
+      ((moment().unix() * 1000) - messages.lastLoaded) > 30000) {
+    console.log('reloading');
+    messages.loaded = false;
+    messages.fetch({callback : (() => {}) });
+  }
+}
+
+window.setInterval(pollMessages, 1000);
+
+
+export default messages
