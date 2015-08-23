@@ -37,6 +37,9 @@ VoiceRouter.defaultProps = { showVoice : true };
 class SmsRouter extends VoiceRouter { }
 SmsRouter.defaultProps = { showSMS : true };
 
+class ConfigRouter extends VoiceRouter {}
+ConfigRouter.defaultProps = { showConfig : true };
+
 class ContactRouter extends VoiceRouter { }
 ContactRouter.defaultProps = { showContact : true };
 
@@ -47,6 +50,7 @@ ContainerRouter.getRoutes = function() {
       <Route name="main" path="phone/" handler={MainPage} >
         <Route name="voice" path="voice" handler={VoiceRouter}></Route>
         <Route name="sms" path="sms" handler={SmsRouter}></Route>
+        <Route name="config" path="config" handler={ConfigRouter}></Route>
         <Route name="conversation" path="sms/:number" handler={SmsRouter}></Route>
         <Route name="contact" path="contact/:contactId" handler={ContactRouter}></Route>
 

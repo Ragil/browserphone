@@ -9,7 +9,8 @@ export default class Env {
     this.service = {
       capability : opts.baseURL + '/api/twilio/capability',
       contacts : opts.baseURL + '/api/google/contacts',
-      sms : opts.baseURL + '/api/twilio/sms'
+      sms : opts.baseURL + '/api/twilio/sms',
+      user : opts.baseURL + '/api/user'
     }
   }
 };

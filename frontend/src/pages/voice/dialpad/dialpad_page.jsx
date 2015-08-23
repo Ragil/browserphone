@@ -15,15 +15,7 @@ export default class DialpadPage extends React.Component {
   }
 
   onCall(e) {
-    global.call.From = env.phoneNumber;
-    global.call.To = this.state.value;
-
-    Twilio.Device.connect({
-      From: global.call.From,
-      To: global.call.To,
-      Direction: 'outbound',
-      'google-token': gapi.auth.getToken().access_token
-    });
+    voice.call(this.state.value);
   }
 
   onInputChange(e) {

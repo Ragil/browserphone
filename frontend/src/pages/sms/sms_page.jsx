@@ -111,10 +111,6 @@ export default class SmsPage extends React.Component {
     });
   }
 
-  createNewMessage(number) {
-
-  }
-
   render() {
     let content;
     if (this.state.loadingSms || this.state.loadingContacts) {

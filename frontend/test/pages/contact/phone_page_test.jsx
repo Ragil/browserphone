@@ -39,7 +39,6 @@ describe('PhonePage', () => {
       let span = testUtils.findRenderedDOMComponentWithClass(page, 'glyphicon-phone');
       testUtils.Simulate.click(span);
 
-      expect(global.call.From).to.equal(env.phoneNumber);
       expect(global.call.To).to.equal(number);
     })
   });

@@ -6,6 +6,7 @@ import React from 'react';
 import ReactSpinner from 'src/common/spin/spin';
 import SmsPage from '../sms/sms_page';
 import VoicePage from '../voice/voice_page';
+import ConfigPage from '../config/config_page';
 import Tab from 'src/common/tabs/tab';
 import TabPage from 'src/common/tabs/tab_page';
 
@@ -41,6 +42,11 @@ export default class MainTabPage extends React.Component {
         title : 'SMS', href: env.appBase + '/sms',
         selected : this.props.showSMS,
         component : <SmsPage {... this.props}/>
+      }),
+      new Tab({
+        title : 'Config', href: env.appBase + '/config',
+        selected : this.props.showConfig,
+        component : <ConfigPage {... this.props}/>
       })
     ];
 
@@ -61,6 +67,7 @@ export default class MainTabPage extends React.Component {
 }
 
 MainTabPage.propTypes = {
+  showConfig : React.PropTypes.bool,
   showSMS : React.PropTypes.bool,
   showVoice : React.PropTypes.bool,
   showContact : React.PropTypes.bool,
