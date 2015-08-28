@@ -11,10 +11,17 @@ export default class MessageBodyPage extends React.Component {
   render() {
     let contact = contacts.findByNumber(this.props.message.from);
 
+    let images = _.map(this.props.message.media, (url) => {
+      return (
+        <img className="message-page-image" src={url} />
+      );
+    });
+
     let messageBody = (
       <div className={this.props.message.isSelf ? "self" : "other"}>
         <p className={"message-page-text " + this.props.message.status} >
           {this.props.message.body}
+          {images}
         </p>
         <span className="message-page-time">
           {moment(this.props.message.date_created).fromNow()}
