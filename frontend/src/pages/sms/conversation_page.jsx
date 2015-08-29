@@ -15,7 +15,7 @@ export default class ConversationPage extends React.Component {
       loadingSMS : false,
       loadingContact : false,
       sendingMessage : false,
-      showingNMessages : 50,
+      showingNMessages : 100,
       messageWindowHeight : '100%'
     };
 
@@ -100,7 +100,7 @@ export default class ConversationPage extends React.Component {
 
     let name = contact ? contact.getIdentity(this.props.conversationNumber) :
         this.props.conversationNumber;
-        
+
     let messagesEl = !conversation ? [] : _.chain(conversation.messages)
         .takeRight(this.state.showingNMessages)
         .map((message, index) => {
