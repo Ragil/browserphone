@@ -4,6 +4,7 @@ import React from 'react';
 import '!style!css!less!./dialpad_page.less';
 import gapi from 'src/common/gapi';
 import global from 'src/common/global';
+import voice from 'src/common/voice';
 
 
 export default class DialpadPage extends React.Component {
