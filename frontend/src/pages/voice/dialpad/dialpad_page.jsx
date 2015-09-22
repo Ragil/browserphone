@@ -24,11 +24,13 @@ export default class DialpadPage extends React.Component {
   }
 
   valueChanged(newValue) {
+    var newKey = newValue.replace(this.state.value, '');
+
     this.setState({
       value : newValue
     });
     if (this.props.onChange) {
-      this.props.onChange(newValue);
+      this.props.onChange(newValue, newKey);
     }
   }
 
@@ -48,7 +50,7 @@ export default class DialpadPage extends React.Component {
   }
 
   render() {
-    let keys = _.map(this.keyLayout, (row) => {
+    let keys = _.map(this.keyLayout, (row, index) => {
 
       let rowKeys = _.map(row, (entry, index) => {
         let key = entry[0];
@@ -72,7 +74,7 @@ export default class DialpadPage extends React.Component {
       });
 
       return (
-        <div className="dialpad-page-row row">
+        <div className="dialpad-page-row row" key={index}>
           {rowKeys}
         </div>
       );

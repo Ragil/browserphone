@@ -3,6 +3,7 @@ import CallerPage from './caller/caller_page';
 import '!style!css!less!./call_page.less';
 import bootstraputil from 'src/common/bootstraputil';
 import ReactSpinner from 'src/common/spin/spin';
+import DialpadPage from '../dialpad/dialpad_page';
 
 
 export default class CallPage extends React.Component {
@@ -44,6 +45,10 @@ export default class CallPage extends React.Component {
     this.setState({
       muted : this.props.connection.isMuted()
     });
+  }
+
+  dialpadChanged(newValue, newKey) {
+    this.props.connection.sendDigits(newKey);
   }
 
   render() {
@@ -114,6 +119,9 @@ export default class CallPage extends React.Component {
               {actions}
             </div>
           </div>
+        </div>
+        <div className="call-page-dialpad row">
+          <DialpadPage onChange={this.dialpadChanged.bind(this)}/>
         </div>
       </div>
     );

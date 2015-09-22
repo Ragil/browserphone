@@ -29,7 +29,9 @@ describe('CallPage', () => {
     });
 
     it('should render reject, ignore, accept button', () => {
-      let btns = testUtils.scryRenderedDOMComponentsWithTag(page, 'button');
+      let actions = testUtils.findRenderedDOMComponentWithClass(page,
+        'call-page-actions');
+      let btns = testUtils.scryRenderedDOMComponentsWithTag(actions, 'button');
       expect(btns.length).to.equal(3);
       expect(btns[0].props.children).to.equal('Answer');
       expect(btns[1].props.children).to.equal('Ignore');
@@ -47,7 +49,9 @@ describe('CallPage', () => {
     });
 
     it('should render sound, hangup button', () => {
-      let btns = testUtils.scryRenderedDOMComponentsWithTag(page, 'button');
+      let actions = testUtils.findRenderedDOMComponentWithClass(page,
+        'call-page-actions');
+      let btns = testUtils.scryRenderedDOMComponentsWithTag(actions, 'button');
       expect(btns.length).to.equal(2);
       expect(testUtils.isElementOfType(btns[0].props.children, 'span')).to.be.true();
       expect(btns[1].props.children).to.equal('Hangup');
