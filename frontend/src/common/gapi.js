@@ -91,6 +91,8 @@ let hasInitPoll = () => {
     callbacks = [];
 
     gapi.login(true);
+  } else if (gapi.load) {
+    gapi.load('client');
   } else {
     window.setTimeout(hasInitPoll, 100);
   }
